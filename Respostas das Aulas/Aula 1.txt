@@ -1,30 +1,30 @@
-1) O que são sistemas embarcados?
+1) O que sÃ£o sistemas embarcados?
 
-Um sistema embarcado é um "computador" que possui uma função dedicada dentro de um dispositivo. Este é embarcado (ou seja, interno) como uma parte de um dispositivo completo. Os sistemas embarcados possuem microprocessadores, memórias, clocks, entradas ETHERNET etc. Os sistemas embarcados são comumente encontrados na cozinha, indústria, automóveis, comércio, aplicações militares, saúde, etc.
+Um sistema embarcado Ã© um "computador" que possui uma funÃ§Ã£o dedicada dentro de um dispositivo. Este Ã© embarcado (ou seja, interno) como uma parte de um dispositivo completo. Os sistemas embarcados possuem microprocessadores, memÃ³rias, clocks, entradas ETHERNET etc. Os sistemas embarcados sÃ£o comumente encontrados na cozinha, indÃºstria, automÃ³veis, comÃ©rcio, aplicaÃ§Ãµes militares, saÃºde, etc.
 
-2) O que são sistemas microprocessados?
-
-
+2) O que sÃ£o sistemas microprocessados?
 
 
-3) Apresente aplicações de sistemas embarcados:
-
-- Para a indústria automotiva:
-
-ABS - Anti-lock braking system: É um sistema de segurança automotiva que permite que as rodas de um veículo motor se mantenham tracionadas quando em contato com a pista.
-
-ESC - Electronic Stability control - Tecnologia computarizada que melhora a estabilidade do veículo detectando redução de perda de tração.
 
 
-- Para eletrodomésticos;
+3) Apresente aplicaÃ§Ãµes de sistemas embarcados:
 
-Máquinas de lavar: Com o uso de temporizadores e programas que auxiliam o usuário.
+- Para a indÃºstria automotiva:
+
+ABS - Anti-lock braking system: Ã‰ um sistema de seguranÃ§a automotiva que permite que as rodas de um veÃ­culo motor se mantenham tracionadas quando em contato com a pista.
+
+ESC - Electronic Stability control - Tecnologia computarizada que melhora a estabilidade do veÃ­culo detectando reduÃ§Ã£o de perda de traÃ§Ã£o.
+
+
+- Para eletrodomÃ©sticos;
+
+MÃ¡quinas de lavar: Com o uso de temporizadores e programas que auxiliam o usuÃ¡rio.
 
  
 
-- Para automação industrial;
+- Para automaÃ§Ã£o industrial;
 
-Cite arquiteturas possíveis e as diferenças entre elas.
+4) Cite arquiteturas possÃ­veis e as diferenÃ§as entre elas.
 
-Por que usamos o MSP430 na disciplina, ao invés de outro microcontrolador?
+5) Por que usamos o MSP430 na disciplina, ao invÃ©s de outro microcontrolador?
 
