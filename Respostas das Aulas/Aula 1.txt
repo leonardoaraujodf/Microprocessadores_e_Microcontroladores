@@ -1,0 +1,30 @@
+1) O que são sistemas embarcados?
+
+Um sistema embarcado é um "computador" que possui uma função dedicada dentro de um dispositivo. Este é embarcado (ou seja, interno) como uma parte de um dispositivo completo. Os sistemas embarcados possuem microprocessadores, memórias, clocks, entradas ETHERNET etc. Os sistemas embarcados são comumente encontrados na cozinha, indústria, automóveis, comércio, aplicações militares, saúde, etc.
+
+2) O que são sistemas microprocessados?
+
+
+
+
+3) Apresente aplicações de sistemas embarcados:
+
+- Para a indústria automotiva:
+
+ABS - Anti-lock braking system: É um sistema de segurança automotiva que permite que as rodas de um veículo motor se mantenham tracionadas quando em contato com a pista.
+
+ESC - Electronic Stability control - Tecnologia computarizada que melhora a estabilidade do veículo detectando redução de perda de tração.
+
+
+- Para eletrodomésticos;
+
+Máquinas de lavar: Com o uso de temporizadores e programas que auxiliam o usuário.
+
+ 
+
+- Para automação industrial;
+
+Cite arquiteturas possíveis e as diferenças entre elas.
+
+Por que usamos o MSP430 na disciplina, ao invés de outro microcontrolador?
+
