@@ -42,6 +42,6 @@ Diferentemente da RISC, a arquitetura CISC é capaz de executar centenas de inst
 
 5) Por que usamos o MSP430 na disciplina, ao invés de outro microcontrolador?
 
-O MSP 430 é um microcontrolador da família da Texas Instruments. Foi construído numa CPU de 16 bits e desenvolvido para aplicações de embarcadas de baixo custo, com pouco consumo de energia e com objetivos específicos. Devido às este requisitos, se encaixa entre um dos microcontroladores mais adequados para propósitos educativos. 
+O MSP 430 é um microcontrolador da família da Texas Instruments. Foi construído numa CPU de 16 bits e desenvolvido para aplicações embarcadas de baixo custo, com pouco consumo de energia e com objetivos específicos. Devido às este requisitos, se encaixa entre um dos microcontroladores mais adequados para propósitos educativos. 
 
 
