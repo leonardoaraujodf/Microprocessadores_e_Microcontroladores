@@ -1,0 +1,105 @@
+Data: 15/03/2017
+
+Q1. Quais as diferenças entre os barramentos de dados e de endereços?
+
+Barramento de Dados: Neste tipo de barramento ocorre troca de dados entre a CPU/Processador e os diversos componentes do sistema. É bidirecional, ou seja, o processador/CPU pode receber os dados armazenados no dispositivo e também escrever dados no dispositivo em questão.
+
+Barramento de Endereço: O barramento de endereço é utilizado para selecionar a localização (endereço) para onde os dados devem ser transmitidos do processador/CPU para o dispositivo, ou do dispositivo para o processador/CPU.
+
+O barramento de endereço não tem a função real de transmitir informações, só serve para endereçar onde a informação precisa transitar pelo barramento de dados, seja pra uma memória, uma placa de rede, etc.
+
+
+Q2. Quais são as diferenças entre as memórias RAM e ROM?
+
+RAM - Random Access-Memory
+
+A principal característica é que quando o sistema é desligado a memória RAM perde seus dados. Além disso, a memória RAM possui a vantagem de permitir acesso ào conteúdo de seus espaços de memória aleatoriamente, portanto pode-se escrever ou ler em qualquer espaço de memória com facilidade.
+
+ROM - Read-Only Memory
+
+Difere da memória RAM pois mesmo quando o sistema é desligado as informações não são perdidas. Inicialmente a memória ROM não tinha a possibilidade de escrita, só havia a possibilidade de leitura. Hoje porém é possível escrever na memória ROM, mas com uma dificuldade muito maior do que na memória RAM. Usualmente, a memória ROM serve para levar dados do fabricante e do hardware ao qual esta está instalada.
+
+
+Q3. Considere o código abaixo, de 12 linhas:
+
+    1.   #include <stdio.h>
+    2.   int main(void)
+    3.   {
+    4.      int i;
+    5.      printf("Insira um número inteiro: ");
+    6.      scanf("%d", &i);
+    7.      if(i%2)
+    8.         printf("%d eh impar.\n");
+    9.      else
+   10.         printf("%d eh par.\n");
+   11.      return 0;
+   12.   }
+
+Para este código, responda:
+	(a) A variável 'i' é armazenada na memória RAM ou ROM? Por quê?
+
+	Nesta instrução, o S.O. usa um espaço de memória na memória RAM para a variável inteira "i". Após o programa terminar, o S.O. libera o espaço da memória, podendo este espaço ser utilizado por outro programa, caso este requeira ao S.O.
+
+	(b) O programa compilado a partir deste código é armazenado na memória RAM ou ROM? Por quê?
+
+	O programa compilado é armazenado em uma memória do tipo não volátil. No caso de PCs Desktops, o programa após compilado (executável) fica armazenado no HD. O HD apesar de não ser uma memória ROM de fato, guarda a informação contida no sistema ainda que este seja desligado por completo e até mesmo desconectado da placa-mãe.
+
+Q4. Quais são as diferenças, vantagens e desvantagens das arquiteturas Harvard e Von Neumann?
+
+Arquitetura Harvard:
+
+É uma arquitetura de computador que se distingue das outras por possuir duas memórias diferentes e independentes em termos de barramento e ligação ao processador.
+
+Baseia-se na separação de barramentos de dados das memórias onde estão as instruções de programa e das memórias de dados, permitindo que um processador possa acessar as duas simultaneamente, obtendo um desempenho melhor do que a da Arquitetura de von Neumann, pois pode buscar uma nova instrução enquanto executa outra.
+
+A principal vantagem desta arquitectura é dada pela dupla ligação às memórias de dados e programa (código), permitindo assim que o processador leia uma instrução ao mesmo tempo que faz um acesso à memória de dados.
+
+
+Arquitetura de von Neumann
+
+A Arquitetura de von Neumann (de John von Neumann), é uma arquitetura de computador que se caracteriza pela possibilidade de uma máquina digital armazenar seus programas no mesmo espaço de memória que os dados, podendo assim manipular tais programas.
+
+A máquina proposta por Von Neumann reúne os seguintes componentes: (i) uma memória, (ii) uma unidade aritmética e lógica (ALU), (iii) uma unidade central de processamento (CPU), composta por diversos registradores, e (iv) uma Unidade de Controle (CU), cuja função é a mesma da tabela de controle da Máquina de Turing universal: buscar um programa na memória, instrução por instrução, e executá-lo sobre os dados de entrada.
+
+A diferença entre a arquitetura Von Neunmann e a Harvard é que a última separa o armazenamento e o comportamento das instruções do CPU e os dados, enquanto a anterior utiliza o mesmo espaço de memória para ambos. Nos CPUs atuais, é mais comum encontrar a arquitetura Von Neunmann, mas algumas coisas da arquitetura Harvard também são vistas.
+
+Q5. Considere a variável inteira 'i', armazenando o valor 0x8051ABCD. Se 'i' é armazenada na memória a partir do endereço 0x0200, como ficam este byte e os seguintes, considerando que a memória é:
+
+	(a) Little-endian?
+
+	Address: 0200 |  0202  | 0204 | 0206 | 
+	Data:	  CD	  AB      51	  80
+
+	(b) Big-endian?
+
+	Address: 0200 |  0202  | 0204 | 0206 | 
+	Data:	  80	  51      AB	  CD
+
+
+
+Q6. Sabendo que o processador do MSP430 tem registradores de 16 bits, como ele soma duas variáveis de 32 bits?
+
+Vamos chamar a primeira variável de i e a segunda de j. Seja k a soma de i + j, onde k = i + j.
+
+Colocaremos os 16 primeiros bits menos significativos de i no registrador R4 e os 16 primeiros bits menos significativos de j no registrador R5. E também, os 16 bits mais significativos de i no registrador R6 e os 16 bits mais significativos de j no registrador R7. Depois, fazemos com que R4 receba a soma de R4 e R5, de forma que R4 <= R4 + R5. 
+
+Depois fazemos que R6 receba a soma de R6 + R7 + C, onde C é o bit de carry da operação anterior, de forma que R6 <= R6 + R7 + C. 
+
+Depois atualizamos R7 caso haja carry no bit menos significativo do registrador, de forma que R7 <= 000000000000000C.
+
+Assim a soma estará armazenada da seguinte forma:
+
+
+    |     R7        |	|	R6	|   |	   R4	     |
+
+k = 000000000000000X	 XXXXXXXXXXXXXXXX    XXXXXXXXXXXXXXXX 
+
+
+
+
+
+
+
+
+
+
