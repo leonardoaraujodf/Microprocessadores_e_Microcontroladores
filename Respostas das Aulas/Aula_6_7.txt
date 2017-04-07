@@ -117,6 +117,7 @@ FIM:
 pop R14; recuperar R14 da pilha
 mov.w R14,R15; return x
 clr.w R14;
+clr.w R13;
 ret
 
 
