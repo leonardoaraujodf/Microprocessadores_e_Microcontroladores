@@ -14,6 +14,42 @@ init:   MOV     #SFE(CSTACK), SP        ; set up stack
 
 main:   NOP                             ; main program
         MOV.W   #WDTPW+WDTHOLD,&WDTCTL  ; Stop watchdog timer
+        MOV.W   #5,R15                  ; R15 <= 5
+        MOV.W   #4,R14                  ; R14 <= 3
+        CALL    #Potencia               ; Faça R15^(R14)        
         JMP $                           ; jump to current location '$'
                                         ; (endless loop)
+MULT_unsigned:
+
+        TST     R14                     ; b==0 ?
+        JNZ     MULT_unsigned_else      ; Se b não é zero, vá para else
+        CLR.W   R15                     ; return 0
+        RET
+        
+MULT_unsigned_else:
+
+        PUSH    R15                     ; guarde a na pilha
+        DEC.W   R14                     ; b--
+        CALL    #MULT_unsigned          ; calcule a*(b-1)
+        POP.W   R14                     ; recupere a da pilha
+        ADD.W   R14,R15                 ; return a + a*(b-1)
+        RET
+        
+Potencia:
+        
+        TST     R14                     ; N==0?
+        JNZ     Potencia_else           ; se N não é zero, vá pra else
+        MOV.W   #1,R15                  ; return 1
+        RET
+        
+Potencia_else:
+
+        PUSH    R15                     ; guarde x na pilha
+        DEC.W   R14                     ; b--
+        CALL #Potencia                  ; calcule x*x^(n-1) 300
+        POP.W   R14                     ; recupere x da pilha
+        CALL #MULT_unsigned              ; Faça R15*R14
+        RET
+        
         END
+        
