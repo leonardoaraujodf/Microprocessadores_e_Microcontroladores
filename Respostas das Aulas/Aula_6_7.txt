@@ -137,27 +137,58 @@ int Potencia(int x, int N)
 
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. 'x' e 'n' são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida no registrador R15.
 
+MULT_unsigned:
 
+        TST     R14                     ; b==0 ?
+        JNZ     MULT_unsigned_else      ; Se b não é zero, vá para else
+        CLR.W   R15                     ; return 0
+        RET
+        
+MULT_unsigned_else:
+
+        PUSH    R15                     ; guarde a na pilha
+        DEC.W   R14                     ; b--
+        CALL    #MULT_unsigned          ; calcule a*(b-1)
+        POP.W   R14                     ; recupere a da pilha
+        ADD.W   R14,R15                 ; return a + a*(b-1)
+        RET
+        
+Potencia:
+        
+        TST     R14                     ; N==0?
+        JNZ     Potencia_else           ; se N não é zero, vá pra else
+        MOV.W   #1,R15                  ; return 1
+        RET
+        
+Potencia_else:
+
+        PUSH    R15                     ; guarde x na pilha
+        DEC.W   R14                     ; b--
+        CALL #Potencia                  ; calcule x*x^(n-1) 300
+        POP.W   R14                     ; recupere x da pilha
+        CALL #MULT_unsigned              ; Faça R15*R14
+        RET
 
 3. Escreva uma sub-rotina na linguagem Assembly do MSP430 que calcula a divisão de 'a' por 'b', onde 'a', 'b' e o valor de saída são inteiros de 16 bits. 'a' e 'b' são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida através do registrador R15.
 
-Divisao_unsigned:
-
-mov #1,R13
-cmp R14,R15 ; R15 = dividendo, R14 = divisor
-jge Divisao_Subtract ; if (R15 >= 14) go to Divisao_subtract
-clr.w R15 ; return 0 caso R15 seja menor que R14
-ret
-
-Divisao_Subtract:
-
-sub.w R14,R15 ; R15 = R15 - R14
-pow.w R13 ; guarde 1 na pilha
-call Divisao_unsigned 
-pop.w R14 ; recupere 1 na pilha
-add.w R14,R15 ; return 1 + divisao(dividendo,divisor)
-clr.w R14; R14 = 0
-ret
+;========================================================================
+;               Calcula a divisão de inteiro da forma R15/R14, sem sinal.
+;========================================================================
+divisao_unsigned: 
+        MOV #1,R13
+        CMP R14,R15 ; R15 = dividendo, R14 = divisor
+        JGE divisao_subtract ; if (R15 >= 14) go to Divisao_subtract
+        CLR.W R15 ; return 0 caso R15 seja menor que R14
+        RET
+divisao_subtract: 
+        SUB.W R14,R15 ; R15 = R15 - R14
+        PUSH.W R13 ; guarde 1 na pilha
+        CALL #divisao_unsigned ; 303
+        POP.W R14 ; recupere 1 na pilha
+        ADD.W R14,R15 ; return 1 + divisao(dividendo,divisor)
+        CLR.W R14; R14 = 0
+        CLR.W R13; R13 = 0
+        RET
 
 
 4. Escreva uma sub-rotina na linguagem Assembly do MSP430 que calcula o resto da divisão de 'a' por 'b', onde 'a', 'b' e o valor de saída são inteiros de 16 bits. 'a' e 'b' são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida através do registrador R15.
