@@ -1,0 +1,93 @@
+#include "msp430.h"                     ; #define controlled include file
+
+        NAME    main                    ; module name
+
+        PUBLIC  main                    ; make the main label vissible
+                                        ; outside this module
+        ORG     0FFFEh
+        DC16    init                    ; set reset vector to 'init' label
+
+        RSEG    CSTACK                  ; pre-declaration of segment
+        RSEG    CODE                    ; place program in 'CODE' segment
+
+init:   MOV     #SFE(CSTACK), SP        ; set up stack
+
+main:   NOP                             ; main program
+        MOV.W   #WDTPW+WDTHOLD,&WDTCTL  ; Stop watchdog timer
+        MOV.W   #47,R15                 ; R15 <= 81
+        CALL    #raiz_quadrada          ; R15 <= sqrt(R15)              
+        JMP $                           ; jump to current location '$'
+                                        ; (endless loop)
+                                        
+;========================================================================
+;               Calcula a divisão de inteiro da forma R15/R14, sem sinal.
+;========================================================================
+divisao_unsigned: 
+        MOV #1,R13
+        CMP R14,R15 ; R15 = dividendo, R14 = divisor
+        JGE divisao_subtract ; if (R15 >= 14) go to Divisao_subtract
+        CLR.W R15 ; return 0 caso R15 seja menor que R14
+        RET
+divisao_subtract: 
+        SUB.W R14,R15 ; R15 = R15 - R14
+        PUSH.W R13 ; guarde 1 na pilha
+        CALL #divisao_unsigned ; 303
+        POP.W R14 ; recupere 1 na pilha
+        ADD.W R14,R15 ; return 1 + divisao(dividendo,divisor)
+        CLR.W R14; R14 = 0
+        CLR.W R13; R13 = 0
+        RET
+
+;========================================================================
+;           Calcula a raiz quadrada de R15, um inteiro.
+;========================================================================
+
+raiz_quadrada: 
+        MOV.W #0,R14 ; x = R14 = 0;
+iteracao: 
+        TST R14; R14 = 0 ?
+        JNE else_iteracao; se R14 != 0, vá pra else
+        PUSH R15 ; guardar R15 = s na pilha
+        MOV.W #2,R14 ; Nesse caso, ainda nao tem problema sobrescrever R14 porque ele é zero nesse momento
+        CALL #divisao_unsigned ; Faça Divisao(s,2)
+        MOV.W R15,R14 ; x =  Divisao(s,2)
+        POP R15 ; recupere S para R15, R15 = s
+        CALL #realizar_iteracao ; faça uma iteracao x = Divisao((x + Divisao(s,x)),2);
+        JMP condicao_while ; vá para a condicao do laço
+        
+realizar_iteracao: 
+        PUSH R15; guarde S na pilha
+        PUSH R14; guarde x na pilha
+        CALL #divisao_unsigned ; faça Divisao(s,x)
+        MOV.W R15,R13 ; R13 <= Divisao(s,x)
+        POP R14 ; recupere x da pilha
+        ADD.W R14,R13 ; faça R13 <= Divisao(s,x) + x
+        MOV.W R13,R15 ; faça R15 <= R13 <= Divisao(s,x) + x. Esta operacao foi realizada para fazer Divisao((x + Divisao(s,x)),2)
+        MOV #2,R14 ; R14 <= 2
+        CALL #divisao_unsigned
+        MOV R15,R14 ; R14 <= x <= Divisao((x + Divisao(s,x)),2)
+        POP R15 ; recupere s da pilha
+        RET
+        
+else_iteracao: 
+        CALL #realizar_iteracao
+
+condicao_while: 
+        PUSH R14 ; guarde x(n) na pilha
+        PUSH R14 ; guarde x(n) na pilha
+        CALL #realizar_iteracao
+        MOV.W R14,R13 ; R13 <= R14 <= Divisao(x + Divisao(s,x)),2)
+        POP R14 ; recupere x(n) da pilha
+        SUB.W R13,R14 ; faça R14 = x(n) - Divisao(x + Divisao(s,x)),2)
+        MOV.W R14,R13 ; faça R13 = R14
+        POP R14 ; recupere x(n) da pilha
+        CMP #1, R13 ; comparar R13 com 1
+        JGE iteracao ; R13 >= 1, vá para iteracao
+                
+fim_raiz_quadrada:
+        MOV.W R14,R15 ; R15 <= R14
+        CLR.W R14 
+        CLR.W R13
+        RET
+        
+        END
