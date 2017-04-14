@@ -531,6 +531,191 @@ main:   NOP                             ; main program
 
 9. Escreva uma sub-rotina na linguagem Assembly do MSP430 que calcula o produto escalar de dois vetores, 'a' e 'b':
 
+Em C:
+
+int MULT_signed(int a, int b)
+{
+	if(a<0 && b<0)
+	{
+		a = -a;
+		b = -b;
+		return MULT_unsigned(a,b);
+	}
+	else if (a<0 && b>0)
+	{
+		a = -a;
+		return -(MULT_unsigned(a,b));
+	}
+	else if (a>0 && b<0)
+	{
+		b = -b;
+		return -(MULT_unsigned(a,b));
+	}
+	else
+	{
+		return MULT_unsigned(a,b);
+	}
+
+}
+
+int MULT_unsigned(unsigned int a, unsigned int b)
+{
+if(b==0) return 0;
+else
+return a+MULT_unsigned(a, (b-1));
+}
+
+int Produto_Escalar_int(int *a,int *b, int n)
+{
+/*O ponteiro *a aponta para o endereço do primeiro vetor na memória e o ponteiro *b aponta para o endereço do
+do segundo vetor na memória. O número n indica o tamanho do vetor. Esta função retorna um valor inteiro.
+*/	
+
+	int i,soma=0;
+	for(i=0;i<n;i++)
+	{
+		soma += MULT_signed(a[i],b[i]);
+	}
+	return soma;
+}
+
+Em Assembly:
+
+#include "msp430.h"                     ; #define controlled include file
+
+        NAME    main                    ; module name
+
+        PUBLIC  main                    ; make the main label vissible
+                                        ; outside this module
+        ORG     0FFFEh
+        DC16    init                    ; set reset vector to 'init' label
+
+        RSEG    CSTACK                  ; pre-declaration of segment
+        RSEG    CODE                    ; place program in 'CODE' segment
+
+init:   MOV     #SFE(CSTACK), SP        ; set up stack
+
+main:   NOP                             ; main program
+        MOV.W   #WDTPW+WDTHOLD,&WDTCTL  ; Stop watchdog timer
+        MOV.W   #0x0a10,R15             ; Passa o endereço de memória 0x0a10 para R15
+        MOV.W   #0x0a20,R14             ; Passa o endereço de memória 0x0a20 para R14
+        MOV.W   #0xFFFF,0(R15)          ; a[0] = -1
+        MOV.W   #0xFFFF,2(R15)          ; a[1] = -1
+        MOV.W   #0xFFFF,4(R15)          ; a[2] = -1
+        MOV.W   #1,0(R14)               ; b[0] = -1
+        MOV.W   #1,2(R14)               ; b[1] = -1
+        MOV.W   #1,4(R14)               ; b[2] = -1
+        MOV.W   #6,R13                  ; passe o n (tamanho do vetor para a função), mas 2*n
+        CALL    #Produto_Escalar        ; pois são 2 bytes para inteiro.
+        
+        JMP $                           ; jump to current location '$'
+                                        ; (endless loop)
+
+Produto_Escalar:
+;------------------------------------------------------------------------
+; R15 = a
+; R14 = b
+; R13 = n
+; R12 = i
+; R11 = soma
+;------------------------------------------------------------------------        
+        CLR     R12                     ; i=0
+        CLR     R11                     ; R11 = soma = 0
+For_Produto_Escalar:
+        CMP     R13,R12
+        JGE     end_for_produto_escalar ;
+        PUSH    R15
+        PUSH    R14
+        ADD.W   R12,R15                 ; some o endereço de a com i
+                                        ; que significa a[i]
+        ADD.W   R12,R14                 ; some o endereço de b com i
+                                        ; que significa b[i]
+        
+        MOV.W   0(R15),R15              ; acesse o valor de a[i] e jogue em R15
+        MOV.W   0(R14),R14              ; acesse o valor de b[i] e jogue em R14
+        CALL    #MULT_signed
+        ADD.W   R15,R11                 ; soma += a[i]*b[i]
+        POP     R15
+        POP     R14
+        INCD    R12                     ; i++
+        JMP     For_Produto_Escalar
+        
+        
+end_for_produto_escalar:
+        
+        MOV.W   R11,R15                 ; return soma
+        CLR     R14
+        CLR     R13
+        CLR     R12
+        CLR     R11
+        RET
+
+MULT_signed:
+        
+        PUSH    R15
+        RLA     R15                                             ; c recebe o sinal de a
+        JNC     Third_else_if_MULT_signed                       ; Pule se a>0
+        POP     R15
+        PUSH    R14
+        RLA     R14                                              ; c recebe o sinal de b
+        JNC     Second_else_if_MULT_signed                       ; Pule se b>0
+        POP     R14
+        INV     R15                                              ; realizando o complemento de 2
+        INC     R15                                              ; nas quatro instruções abaixo
+        INV     R14
+        INC     R14
+        CALL    #MULT_unsigned
+        CLR     R14
+        RET                                                      ; return MULT_unsigned(a,b)
+
+Second_else_if_MULT_signed:                                      ; a<0 mas b>0                        
+        POP     R14
+        INV     R15                                              ; realizando o comp.2 para a
+        INC     R15
+        CALL    #MULT_unsigned
+        INV     R15                                              ; realizando o comp. de 2 para
+        INC     R15                                              ; retornar -(MULT_unsigned(a,b))
+        CLR     R14
+        RET
+        
+Third_else_if_MULT_signed:                                       ; a>0 mas b<0 ?
+        POP     R15
+        PUSH    R14
+        RLA     R14                                              ; c recebe o sinal de b
+        JNC     else__MULT_signed                                ; Pule se b>0
+        POP     R14
+        INV     R14                                              ; realizando o complemento de 2
+        INC     R14                                              ; para b
+        CALL    #MULT_unsigned
+        INV     R15                                              ; realizando o comp. de 2 para
+        INC     R15                                              ; retornar -(MULT_unsigned(a,b))
+        CLR     R14
+        RET
+        
+else__MULT_signed:
+        POP     R14
+        CALL    #MULT_unsigned                                    ; return MULT_unsigned(a,b)
+        CLR     R14
+        RET
+
+MULT_unsigned:
+
+        TST     R14                     ; b==0 ?
+        JNZ     MULT_unsigned_else      ; Se b não é zero, vá para else
+        CLR.W   R15                     ; return 0
+        RET
+        
+MULT_unsigned_else:
+
+        PUSH    R15                     ; guarde a na pilha
+        DEC.W   R14                     ; b--
+        CALL    #MULT_unsigned          ; calcule a*(b-1)
+        POP.W   R14                     ; recupere a da pilha
+        ADD.W   R14,R15                 ; return a + a*(b-1)
+        RET
+
+        END
+
 	
 O primeiro endereço do vetor 'a' deverá ser passado através do registrador R15, o primeiro endereço do vetor 'b' deverá ser passado através do registrador R14, e o tamanho do vetor deverá ser passado pelo registrador R13. A saída deverá ser fornecida no registrador R15.
 
