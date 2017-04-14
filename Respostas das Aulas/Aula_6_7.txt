@@ -529,8 +529,6 @@ main:   NOP                             ; main program
         
         END
 
-
-
 9. Escreva uma sub-rotina na linguagem Assembly do MSP430 que calcula o produto escalar de dois vetores, 'a' e 'b':
 
 	
