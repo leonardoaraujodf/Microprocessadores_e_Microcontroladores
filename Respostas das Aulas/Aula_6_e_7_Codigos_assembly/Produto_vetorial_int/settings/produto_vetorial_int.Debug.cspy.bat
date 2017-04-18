@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Users\Leonardo\Documents\UnB\5 Semestre\Microprocessadores e Microcontroladores\Aula_6_e_7_Codigos_assembly\Raiz_quadrada\settings\Raiz_quadrada.Debug.general.xcl" --backend -f "C:\Users\Leonardo\Documents\UnB\5 Semestre\Microprocessadores e Microcontroladores\Aula_6_e_7_Codigos_assembly\Raiz_quadrada\settings\Raiz_quadrada.Debug.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Users\Leonardo\Documents\UnB\5 Semestre\Microprocessadores e Microcontroladores\Aula_6_e_7_Codigos_assembly\Produto_vetorial_int\settings\produto_vetorial_int.Debug.general.xcl" --backend -f "C:\Users\Leonardo\Documents\UnB\5 Semestre\Microprocessadores e Microcontroladores\Aula_6_e_7_Codigos_assembly\Produto_vetorial_int\settings\produto_vetorial_int.Debug.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Users\Leonardo\Documents\UnB\5 Semestre\Microprocessadores e Microcontroladores\Aula_6_e_7_Codigos_assembly\Raiz_quadrada\settings\Raiz_quadrada.Debug.general.xcl" "--debug_file=%~1" --backend -f "C:\Users\Leonardo\Documents\UnB\5 Semestre\Microprocessadores e Microcontroladores\Aula_6_e_7_Codigos_assembly\Raiz_quadrada\settings\Raiz_quadrada.Debug.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "C:\Users\Leonardo\Documents\UnB\5 Semestre\Microprocessadores e Microcontroladores\Aula_6_e_7_Codigos_assembly\Produto_vetorial_int\settings\produto_vetorial_int.Debug.general.xcl" "--debug_file=%~1" --backend -f "C:\Users\Leonardo\Documents\UnB\5 Semestre\Microprocessadores e Microcontroladores\Aula_6_e_7_Codigos_assembly\Produto_vetorial_int\settings\produto_vetorial_int.Debug.driver.xcl" 
 
 @echo off 
 :end

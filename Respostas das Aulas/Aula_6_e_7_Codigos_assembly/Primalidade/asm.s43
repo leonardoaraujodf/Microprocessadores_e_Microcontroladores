@@ -1,0 +1,69 @@
+#include "msp430.h"                     ; #define controlled include file
+
+        NAME    main                    ; module name
+
+        PUBLIC  main                    ; make the main label vissible
+                                        ; outside this module
+        ORG     0FFFEh
+        DC16    init                    ; set reset vector to 'init' label
+
+        RSEG    CSTACK                  ; pre-declaration of segment
+        RSEG    CODE                    ; place program in 'CODE' segment
+
+init:   MOV     #SFE(CSTACK), SP        ; set up stack
+
+main:   NOP                             ; main program
+        MOV.W   #WDTPW+WDTHOLD,&WDTCTL  ; Stop watchdog timer
+        MOV.W   #12631,R15                  ; R15 <= 5
+        CALL #Primalidade               ; Verifique se 5 é primo
+                                        ; É primo se v == 1
+                                        ; Não é primo se v == 0
+        JMP $                           ; jump to current location '$'
+                                        ; (endless loop)
+
+Primalidade:
+        TST     R15                     ; R15 == 0?
+        JEQ     Nao_primo               
+        CMP     #1,R15                  ; R15 == 1?
+        JEQ     Nao_primo
+        CMP     #2,R15                  ; R15 == 2?
+        JEQ     E_primo
+        MOV.W   #3,R14                  ; R14 = i = 3
+While_verificar:
+        CMP     R14,R15
+        JEQ     E_primo                 ; E' primo se a==i
+        PUSH    R14                     ; Guarde R14 na pilha
+        PUSH    R15                     ; Guarde R15 na pilha
+        CALL    #remainder              ; Faça a%i
+        TST     R15
+        JEQ     Nao_primo_2             ; R15 == a%i == 0?
+        POP     R15                     ; Recupere R15
+        POP     R14                     ; Recupere R14
+        ADD.W   #2,R14                  ; i += 2
+        JMP     While_verificar
+Nao_primo:
+        MOV.W   #0,R15                  ; return 0
+        CLR.W   R14
+        RET
+
+Nao_primo_2:
+        POP     R15
+        POP     R15
+        MOV.W   #0,R15                  ; return 0
+        CLR.W   R14
+        RET
+E_primo
+        MOV.W   #1,R15                  ; return 1
+        CLR.W   R14
+        RET
+
+remainder:
+        CMP     R14,R15                     
+        JL      remainder_finish         ; R15 < R14 vá para finish
+        SUB.W   R14,R15                  ; R15 <= R15 - R14
+        JMP     remainder
+        
+remainder_finish:
+        RET
+        
+        END
