@@ -160,6 +160,75 @@ int Potencia(int x, int N)
 
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. 'x' e 'n' são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida no registrador R15.
 
+#include "msp430.h"                     ; #define controlled include file
+
+        NAME    main                    ; module name
+
+        PUBLIC  main                    ; make the main label vissible
+                                        ; outside this module
+        ORG     0FFFEh
+        DC16    init                    ; set reset vector to 'init' label
+
+        RSEG    CSTACK                  ; pre-declaration of segment
+        RSEG    CODE                    ; place program in 'CODE' segment
+
+init:   MOV     #SFE(CSTACK), SP        ; set up stack
+
+main:   NOP                             ; main program
+        MOV.W   #WDTPW+WDTHOLD,&WDTCTL  ; Stop watchdog timer
+        MOV.W   #0xFFFB,R15             ; R15 <= -5
+        MOV.W   #3,R14                  ; R14 <= 3
+        CALL    #Potencia               ; Faça R15^(R14)        
+        JMP $                           ; jump to current location '$'
+                                        ; (endless loop)
+MULT_signed:
+        
+        PUSH    R15
+        RLA     R15                                             ; c recebe o sinal de a
+        JNC     Third_else_if_MULT_signed                       ; Pule se a>0
+        POP     R15
+        PUSH    R14
+        RLA     R14                                              ; c recebe o sinal de b
+        JNC     Second_else_if_MULT_signed                       ; Pule se b>0
+        POP     R14
+        INV     R15                                              ; realizando o complemento de 2
+        INC     R15                                              ; nas quatro instruções abaixo
+        INV     R14
+        INC     R14
+        CALL    #MULT_unsigned
+        CLR     R14
+        RET                                                      ; return MULT_unsigned(a,b)
+
+Second_else_if_MULT_signed:                                      ; a<0 mas b>0                        
+        POP     R14
+        INV     R15                                              ; realizando o comp.2 para a
+        INC     R15
+        CALL    #MULT_unsigned
+        INV     R15                                              ; realizando o comp. de 2 para
+        INC     R15                                              ; retornar -(MULT_unsigned(a,b))
+        CLR     R14
+        RET
+        
+Third_else_if_MULT_signed:                                       ; a>0 mas b<0 ?
+        POP     R15
+        PUSH    R14
+        RLA     R14                                              ; c recebe o sinal de b
+        JNC     else__MULT_signed                                ; Pule se b>0
+        POP     R14
+        INV     R14                                              ; realizando o complemento de 2
+        INC     R14                                              ; para b
+        CALL    #MULT_unsigned
+        INV     R15                                              ; realizando o comp. de 2 para
+        INC     R15                                              ; retornar -(MULT_unsigned(a,b))
+        CLR     R14
+        RET
+        
+else__MULT_signed:
+        POP     R14
+        CALL    #MULT_unsigned                                    ; return MULT_unsigned(a,b)
+        CLR     R14
+        RET
+
 MULT_unsigned:
 
         TST     R14                     ; b==0 ?
@@ -187,31 +256,84 @@ Potencia_else:
 
         PUSH    R15                     ; guarde x na pilha
         DEC.W   R14                     ; b--
-        CALL #Potencia                  ; calcule x*x^(n-1) 300
+        CALL    #Potencia               ; calcule x*x^(n-1) 300
         POP.W   R14                     ; recupere x da pilha
-        CALL #MULT_unsigned              ; Faça R15*R14
+        CALL    #MULT_signed            ; Faça R15*R14
         RET
+        
+        END
 
 3. Escreva uma sub-rotina na linguagem Assembly do MSP430 que calcula a divisão de 'a' por 'b', onde 'a', 'b' e o valor de saída são inteiros de 16 bits. 'a' e 'b' são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida através do registrador R15.
+
+DIV_signed:
+        
+        PUSH    R15
+        RLA     R15                                             ; c recebe o sinal de a
+        JNC     Third_else_if_DIV_signed                       ; Pule se a>0
+        POP     R15
+        PUSH    R14
+        RLA     R14                                              ; c recebe o sinal de b
+        JNC     Second_else_if_DIV_signed                       ; Pule se b>0
+        POP     R14
+        INV     R15                                              ; realizando o complemento de 2
+        INC     R15                                              ; nas quatro instruções abaixo
+        INV     R14
+        INC     R14
+        CALL    #divisao_unsigned
+        CLR     R14
+        RET                                                      ; return divisao_unsigned(a,b)
+
+Second_else_if_DIV_signed:                                      ; a<0 mas b>0                        
+        POP     R14
+        INV     R15                                              ; realizando o comp.2 para a
+        INC     R15
+        CALL    #divisao_unsigned
+        INV     R15                                              ; realizando o comp. de 2 para
+        INC     R15                                              ; retornar -(divisao_unsigned(a,b))
+        CLR     R14
+        RET
+        
+Third_else_if_DIV_signed:                                       ; a>0 mas b<0 ?
+        POP     R15
+        PUSH    R14
+        RLA     R14                                              ; c recebe o sinal de b
+        JNC     else_DIV_signed                                ; Pule se b>0
+        POP     R14
+        INV     R14                                              ; realizando o complemento de 2
+        INC     R14                                              ; para b
+        CALL    #divisao_unsigned
+        INV     R15                                              ; realizando o comp. de 2 para
+        INC     R15                                              ; retornar -(divisao_unsigned(a,b))
+        CLR     R14
+        RET
+        
+else_DIV_signed:
+        POP     R14
+        CALL    #divisao_unsigned                                ; return divisao_unsigned(a,b)
+        CLR     R14
+        RET
 
 ;========================================================================
 ;               Calcula a divisão de inteiro da forma R15/R14, sem sinal.
 ;========================================================================
+
 divisao_unsigned: 
         MOV #1,R13
-        CMP R14,R15 ; R15 = dividendo, R14 = divisor
-        JGE divisao_subtract ; if (R15 >= 14) go to Divisao_subtract
-        CLR.W R15 ; return 0 caso R15 seja menor que R14
+        CMP R14,R15             ; R15 = dividendo, R14 = divisor
+        JGE divisao_subtract    ; if (R15 >= 14) go to Divisao_subtract
+        CLR.W R15               ; return 0 caso R15 seja menor que R14
         RET
+        
 divisao_subtract: 
-        SUB.W R14,R15 ; R15 = R15 - R14
-        PUSH.W R13 ; guarde 1 na pilha
-        CALL #divisao_unsigned ; 303
-        POP.W R14 ; recupere 1 na pilha
-        ADD.W R14,R15 ; return 1 + divisao(dividendo,divisor)
-        CLR.W R14; R14 = 0
-        CLR.W R13; R13 = 0
+        SUB.W R14,R15           ; R15 = R15 - R14
+        PUSH.W R13              ; guarde 1 na pilha
+        CALL #divisao_unsigned  ; 303
+        POP.W R14               ; recupere 1 na pilha
+        ADD.W R14,R15           ; return 1 + divisao(dividendo,divisor)
+        CLR.W R14               ; R14 = 0
+        CLR.W R13               ; R13 = 0
         RET
+        
 
 
 4. Escreva uma sub-rotina na linguagem Assembly do MSP430 que calcula o resto da divisão de 'a' por 'b', onde 'a', 'b' e o valor de saída são inteiros de 16 bits. 'a' e 'b' são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida através do registrador R15.
