@@ -727,4 +727,83 @@ Se o vetor for palíndromo, retorne o valor 1. Caso contrário, retorne o valor 0.
 
 	int Palindromo(int vetor[ ], int tamanho);
 
+int Palindromo(int *p,int tamanho)
+{
+	int i;
+	for(i=0;i<tamanho;i++)
+	{
+		if(p[i]!=p[(tamanho-1)-i])
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
+
+
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. O endereço do vetor de entrada é dado pelo registrador R15, o tamanho do vetor é dado pelo registrador R14, e o resultado é dado pelo registrador R15.
+
+#include "msp430.h"                     ; #define controlled include file
+
+        NAME    main                    ; module name
+
+        PUBLIC  main                    ; make the main label vissible
+                                        ; outside this module
+        ORG     0FFFEh
+        DC16    init                    ; set reset vector to 'init' label
+
+        RSEG    CSTACK                  ; pre-declaration of segment
+        RSEG    CODE                    ; place program in 'CODE' segment
+
+init:   MOV     #SFE(CSTACK), SP        ; set up stack
+
+main:   NOP                             ; main program
+        MOV.W   #WDTPW+WDTHOLD,&WDTCTL  ; Stop watchdog timer
+        MOV.W   #0x0a00,R15             ; R15 = ponteiro para o endereço de memória 0x0a00
+        MOV.W   #1,0(R15)               ; vetor[0] = 1
+        MOV.W   #2,2(R15)               ; vetor[1] = 2
+        MOV.W   #3,4(R15)               ; vetor[3] = 3
+        MOV.W   #2,6(R15)               ; vetor[4] = 2
+        MOV.W   #1,8(R15)               ; vetor[5] = 1
+        MOV.W   #10,R14                  ; R14 = tamanho*2
+        CALL    #Palindromo             
+        JMP $                           ; jump to current location '$'
+                                        ; (endless loop)
+
+Palindromo:
+        CLR     R13                     ; R13 = i = 0
+For_Palindromo:
+        CMP     R14,R13                 ; i >= 5 ?
+        JGE     End_For_Palindromo      ;        
+        PUSH    R13                     ; guarde i na pilha
+        PUSH    R14                     ; guarde tamanho na pilha       
+        DECD    R14                     ; R14 =  2*tamanho - 2*1
+        SUB.W   R13,R14                 ; R14 = tamanho -1 - i
+        ADD.W   R15,R14                 ; R14 = 0x0a00 + tamanho - 1 - i
+        ADD.W   R15,R13                 ; R13 = 0x0a00 + i
+        CMP     0(R13),0(R14)           ; p[i] != p[(tamanho-1)-i] ?
+        JNE     Nao_palindromo          ;
+        POP     R14                     ; recupere tamanho da pilha
+        POP     R13                     ; recupere i da pilha
+        INCD    R13                     ; i++ (mas 2 porque cada int tem 2 bytes)
+        JMP     For_Palindromo
+        
+End_For_Palindromo:
+        MOV.W   #1,R15                  ; R15 = 1
+        CLR     R14
+        CLR     R13
+        RET
+        
+Nao_palindromo:
+        POP     R15                     ; limpando a pilha
+        POP     R15                     ; limpando a pilha
+        CLR     R15                     ; return 0
+        CLR     R14
+        CLR     R13
+        RET
+        
+        END
+
+
+
+
