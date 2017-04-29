@@ -46,7 +46,30 @@ int main(void)
 
 3. Escreva um código em C que acende os LEDs quando o botão é pressionado.
 
-
+//Ligar LEDS enquanto o
+//botão estiver pressionado
+#include <msp430g2553.h>
+#define BTN BIT3
+#define LED1 BIT0
+#define LED2 BIT6
+int main(void){
+    WDTCTL = WDTPW | WDTHOLD;
+    P1OUT = 0;
+    P1REN |= BTN;
+    P1DIR |= LED1 + LED2;
+    P1OUT |= BTN; 
+    for(;;)
+      {
+      if((P1IN & BTN) == 0)
+      {
+        P1OUT |= LED1 + LED2;
+      }
+      else
+      {
+        P1OUT &= ~(LED1 + LED2);
+      }
+      }
+}
 
 4. Escreva um código em C que pisca os LEDs ininterruptamente somente se o botão for pressionado.
 
