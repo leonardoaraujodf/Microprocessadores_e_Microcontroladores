@@ -1,5 +1,27 @@
 #include<msp430g2553.h>
 
+int Motor_Direction(char string[])
+{
+  /*
+  Forma de programação para o CI L293B
+         CHIP ENABLE 1   -|------- |-
+                        -|        |-
+            -|        |-
+            -|  L293B |-
+            -|        |-
+            -|        |-
+            -|        |-         
+            -|________|-
+  BIT0 - ENABLE1
+  
+  */
+  if (string == "Right")
+  {
+    return  0x
+  }
+  
+}
+
 volatile unsigned int i;
 int main(void)
 {
