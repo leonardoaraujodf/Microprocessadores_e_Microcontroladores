@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
     <fileVersion>2</fileVersion>
-    <fileChecksum>4290633888</fileChecksum>
+    <fileChecksum>1970846411</fileChecksum>
     <configuration>
         <name>Debug</name>
         <outputs>
             <file>$PROJ_DIR$\main.c</file>
+            <file>$PROJ_DIR$\Debug\Obj\main.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\config\linker\lnk430g2553.xcl</file>
+            <file>$TOOLKIT_DIR$\inc\in430.h</file>
+            <file>$PROJ_DIR$\Debug\List\q8.map</file>
+            <file>$TOOLKIT_DIR$\inc\msp430g2553.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
             <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\q8.pbd</file>
+            <file>$TOOLKIT_DIR$\lib\dlib\dl430fn.r43</file>
             <file>$PROJ_DIR$\Debug\Exe\q8.d43</file>
             <file>$PROJ_DIR$\Debug\Exe\q8.ulp</file>
             <file>$PROJ_DIR$\Debug\Obj\main.r43</file>
-            <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
-            <file>$PROJ_DIR$\Debug\Obj\q8.pbd</file>
-            <file>$TOOLKIT_DIR$\lib\dlib\dl430fn.r43</file>
-            <file>$TOOLKIT_DIR$\config\linker\lnk430f149.xcl</file>
-            <file>$PROJ_DIR$\Debug\List\q8.map</file>
-            <file>$TOOLKIT_DIR$\config\linker\multiplier.xcl</file>
-            <file>$TOOLKIT_DIR$\inc\in430.h</file>
-            <file>$TOOLKIT_DIR$\inc\msp430g2553.h</file>
         </outputs>
         <file>
             <name>[ROOT_NODE]</name>
             <outputs>
                 <tool>
                     <name>ULP430</name>
-                    <file> 3</file>
+                    <file> 11</file>
                 </tool>
                 <tool>
                     <name>XLINK</name>
-                    <file> 2 9</file>
+                    <file> 10 4</file>
                 </tool>
             </outputs>
         </file>
@@ -37,21 +37,25 @@
             <outputs>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 5</file>
+                    <file> 6</file>
                 </tool>
                 <tool>
                     <name>ICC430</name>
-                    <file> 4</file>
+                    <file> 12</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 1</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 1 11 12</file>
+                    <file> 7 3 5</file>
                 </tool>
                 <tool>
                     <name>ICC430</name>
-                    <file> 12 11 1</file>
+                    <file> 5 3 7</file>
                 </tool>
             </inputs>
         </file>
@@ -60,13 +64,13 @@
             <outputs>
                 <tool>
                     <name>XLINK</name>
-                    <file> 9</file>
+                    <file> 4</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>XLINK</name>
-                    <file> 8 10 4 7</file>
+                    <file> 2 12 9</file>
                 </tool>
             </inputs>
         </file>

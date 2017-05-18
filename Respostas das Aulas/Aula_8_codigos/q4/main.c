@@ -1,30 +1,34 @@
-
 #include <msp430g2553.h>
+#include <intrinsics.h>
 #define BTN BIT3
 #define LED1 BIT0
 #define LED2 BIT6
 
-int main( void )
+void main( void )
 {
-  volatile unsigned int i;
   // Stop watchdog timer to prevent time out reset
   WDTCTL = WDTPW + WDTHOLD;
-  P1OUT = 0;
-  P1REN |= BTN;
+  P1OUT |= LED1 + LED2;
   P1DIR |= LED1 + LED2;
-  P1OUT = BTN;
+  P1DIR &= ~BTN;
+  P1REN |= BTN;
+  P1OUT |= BTN;
+  P1IES |= BTN;
+  P1IE |= BTN;
+  _BIS_SR(GIE);
     for(;;)
     {
-      if((P1IN & BTN) == 0)
-      {
-        P1OUT ^= LED1 + LED2;
-        
-      }
-      else
-      {
-        P1OUT &= ~(LED1 + LED2);
-      }
-      for(i=0; i<3; i++);
+      
     }
-  return 0;
 }
+
+#pragma vector = PORT1_VECTOR
+__interrupt void Port_1(void)
+{
+    while((P1IN&BTN)==0)
+    {
+      P1OUT ^= LED1 + LED2;
+    }
+    P1IFG &= ~BTN;
+}
+

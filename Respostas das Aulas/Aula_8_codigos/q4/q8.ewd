@@ -40,7 +40,7 @@
                 </option>
                 <option>
                     <name>DynDriver</name>
-                    <state>SIM430</state>
+                    <state>430FET</state>
                 </option>
                 <option>
                     <name>dDllSlave</name>
@@ -56,7 +56,7 @@
                 </option>
                 <option>
                     <name>DdfFileName</name>
-                    <state>$TOOLKIT_DIR$\config\debugger\msp430f149.ddf</state>
+                    <state>$TOOLKIT_DIR$\config\debugger\msp430g2553.ddf</state>
                 </option>
                 <option>
                     <name>ProcTMS</name>

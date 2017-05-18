@@ -2,7 +2,7 @@
 #                                                                              #
 #      IAR Universal Linker V6.4.6.89                                          #
 #                                                                              #
-#           Link time     =  03/May/2017  13:41:42                             #
+#           Link time     =  14/May/2017  23:55:20                             #
 #           Target CPU    =  MSP430                                            #
 #           List file     =  "C:\Users\Leonardo\Desktop\Microprocessadores_e_M #
 #                            icrocontroladores\Respostas das Aulas\Aula_8_codi #
@@ -14,7 +14,7 @@
 #                            UBROF version 10.0.6                              #
 #                            Using library modules for C-SPY (-rt)             #
 #           Command line  =  -f                                                #
-#                            C:\Users\Leonardo\AppData\Local\Temp\EW9E20.tmp   #
+#                            C:\Users\Leonardo\AppData\Local\Temp\EW2D9B.tmp   #
 #                            ("C:\Users\Leonardo\Desktop\Microprocessadores_e_ #
 #                            Microcontroladores\Respostas das Aulas\Aula_8_cod #
 #                            igos\q4\Debug\Obj\main.r43"                       #
@@ -31,29 +31,24 @@
 #                            rkbench 8.0\430\LIB\"                             #
 #                            -f                                                #
 #                            "C:\Program Files (x86)\IAR Systems\Embedded Work #
-#                            bench 8.0\430\config\linker\lnk430f149.xcl"       #
+#                            bench 8.0\430\config\linker\lnk430g2553.xcl"      #
 #                            (-cmsp430 -QCODE_I=CODE_ID -QTLS16_I=TLS16_ID     #
-#                            -D__iar_HWMUL=130 -Z(CONST)INFO=1000-10FF         #
-#                            -Z(CONST)INFOA=1080-10FF                          #
-#                            -Z(CONST)INFOB=1000-107F                          #
+#                            -Z(CONST)INFO=1000-10FF                           #
+#                            -Z(CONST)INFOA=10C0-10FF                          #
+#                            -Z(CONST)INFOB=1080-10BF                          #
+#                            -Z(CONST)INFOC=1040-107F                          #
+#                            -Z(CONST)INFOD=1000-103F                          #
 #                            -Z(DATA)DATA16_I,DATA16_Z,DATA16_N,TLS16_I=0200-0 #
-#                            9FF                                               #
+#                            3FF                                               #
 #                            -Z(DATA)DATA16_HEAP+_DATA16_HEAP_SIZE             #
 #                            -Z(DATA)CODE_I -Z(DATA)CSTACK+_STACK_SIZE#        #
 #                            -Z(CONST)DATA16_C,DATA16_ID,TLS16_ID,DIFUNCT,CHEC #
-#                            KSUM=1100-FFDF                                    #
-#                            -Z(CODE)CSTART,ISR_CODE,CODE_ID=1100-FFDF         #
-#                            -P(CODE)CODE=1100-FFDF -Z(CODE)INTVEC=FFE0-FFFF   #
-#                            -Z(CODE)RESET=FFFE-FFFF) -f                       #
-#                            "C:\Program Files (x86)\IAR Systems\Embedded Work #
-#                            bench 8.0\430\config\linker\multiplier.xcl"       #
-#                            (-e?Mul8Hw=?Mul8 -e?Mul16Hw=?Mul16                #
-#                            -e?Mul16to32uHw=?Mul16to32u                       #
-#                            -e?Mul16to32sHw=?Mul16to32s -e?Mul32Hw=?Mul32     #
-#                            -e_Mul64iHw=_Mul64i                               #
-#                            -e_Mul32u32uto64iHw=_Mul32u32uto64i               #
-#                            -e?Mul32fHw=_Mul32f -e_Mul64fHwPtr=_Mul64fPtr)    #
-#                            -D_STACK_SIZE=50 -rt                              #
+#                            KSUM=C000-FFDD                                    #
+#                            -Z(CODE)CSTART,ISR_CODE,CODE_ID=C000-FFDD         #
+#                            -P(CODE)CODE=C000-FFDD                            #
+#                            -Z(CONST)SIGNATURE=FFDE-FFDF                      #
+#                            -Z(CODE)INTVEC=FFE0-FFFF                          #
+#                            -Z(CODE)RESET=FFFE-FFFF) -D_STACK_SIZE=50 -rt     #
 #                            "C:\Program Files (x86)\IAR Systems\Embedded Work #
 #                            bench 8.0\430\lib\dlib\dl430fn.r43"               #
 #                            -e_PrintfLarge=_Printf -e_ScanfLarge=_Scanf       #
@@ -73,7 +68,7 @@
                 *                                      *
                 ****************************************
 
-       Program entry at :           1100  Relocatable, from module : ?cstart
+       Program entry at :           C000  Relocatable, from module : ?cstart
 
 
 
@@ -124,7 +119,6 @@ Absolute parts
            _DATA20_HEAP_SIZE       0050 
            _DATA16_HEAP_SIZE       0050 
            _STACK_SIZE             0050 
-           __iar_HWMUL             0130 
     *************************************************************************
 
   FILE NAME : C:\Users\Leonardo\Desktop\Microprocessadores_e_Microcontroladores\Respostas das Aulas\Aula_8_codigos\q4\Debug\Obj\main.r43
@@ -134,14 +128,15 @@ Absolute parts
   ======================
 DATA16_AN
   Relative segment, address: 0020 - 0020 (0x1 bytes), align: 0
-  Segment part 1. ROOT        Intra module refs:   main
+  Segment part 1. ROOT        Intra module refs:   Port_1
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
            P1IN                    0020 
     -------------------------------------------------------------------------
 DATA16_AN
   Relative segment, address: 0021 - 0021 (0x1 bytes), align: 0
-  Segment part 2. ROOT        Intra module refs:   main
+  Segment part 2. ROOT        Intra module refs:   Port_1
+                                                   main
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
            P1OUT                   0021 
@@ -154,25 +149,61 @@ DATA16_AN
            P1DIR                   0022 
     -------------------------------------------------------------------------
 DATA16_AN
+  Relative segment, address: 0023 - 0023 (0x1 bytes), align: 0
+  Segment part 4. ROOT        Intra module refs:   Port_1
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           P1IFG                   0023 
+    -------------------------------------------------------------------------
+DATA16_AN
+  Relative segment, address: 0024 - 0024 (0x1 bytes), align: 0
+  Segment part 5. ROOT        Intra module refs:   main
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           P1IES                   0024 
+    -------------------------------------------------------------------------
+DATA16_AN
+  Relative segment, address: 0025 - 0025 (0x1 bytes), align: 0
+  Segment part 6. ROOT        Intra module refs:   main
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           P1IE                    0025 
+    -------------------------------------------------------------------------
+DATA16_AN
   Relative segment, address: 0027 - 0027 (0x1 bytes), align: 0
-  Segment part 4. ROOT        Intra module refs:   main
+  Segment part 7. ROOT        Intra module refs:   main
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
            P1REN                   0027 
     -------------------------------------------------------------------------
 DATA16_AN
   Relative segment, address: 0120 - 0121 (0x2 bytes), align: 0
-  Segment part 5. ROOT        Intra module refs:   main
+  Segment part 8. ROOT        Intra module refs:   main
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
            WDTCTL                  0120 
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: 110C - 114B (0x40 bytes), align: 1
-  Segment part 7.
+  Relative segment, address: C00C - C035 (0x2a bytes), align: 1
+  Segment part 11.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           main                    110C            Segment part 18 (?cstart)
+           main                    C00C            Segment part 18 (?cstart)
+    -------------------------------------------------------------------------
+<CODE> 1 (was CODE)
+  Relative segment, address: C036 - C049 (0x14 bytes), align: 1
+  Segment part 12.            Intra module refs:   Port_1::??INTVEC 4
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           Port_1                  C036 
+               interrupt function
+    -------------------------------------------------------------------------
+INTVEC
+  Common segment, address: FFE0 - FFE5 (0x6 bytes), align: 1
+  Segment part 9. ROOT 
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           Port_1::??INTVEC 4      FFE4 
 
     *************************************************************************
 
@@ -182,11 +213,11 @@ DATA16_AN
   SEGMENTS IN THE MODULE
   ======================
 <CODE> 1 (was CODE)
-  Relative segment, address: 1166 - 1167 (0x2 bytes), align: 1
+  Relative segment, address: C064 - C065 (0x2 bytes), align: 1
   Segment part 2.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           __DebugBreak            1166            __exit (?__exit)
+           __DebugBreak            C064            __exit (?__exit)
 
     -------------------------------------------------------------------------
   LIBRARY MODULE, NAME : ?__exit
@@ -194,11 +225,11 @@ DATA16_AN
   SEGMENTS IN THE MODULE
   ======================
 <CODE> 1 (was CODE)
-  Relative segment, address: 114C - 115D (0x12 bytes), align: 1
+  Relative segment, address: C04A - C05B (0x12 bytes), align: 1
   Segment part 2.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           __exit                  114C            Segment part 6 (?_exit)
+           __exit                  C04A            Segment part 6 (?_exit)
                                                    _exit (?_exit)
                calls direct
 
@@ -208,14 +239,14 @@ DATA16_AN
   SEGMENTS IN THE MODULE
   ======================
 <CODE> 1 (was CODE)
-  Relative segment, address: 115E, align: 1
+  Relative segment, address: C05C, align: 1
   Segment part 0.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           _exit                   115E            exit (?exit)
+           _exit                   C05C            exit (?exit)
     -------------------------------------------------------------------------
 <CODE> 1 (was CODE)
-  Relative segment, address: 115E - 1161 (0x4 bytes), align: 1
+  Relative segment, address: C05C - C05F (0x4 bytes), align: 1
   Segment part 6.             Intra module refs:   _exit
 
     -------------------------------------------------------------------------
@@ -224,25 +255,25 @@ DATA16_AN
   SEGMENTS IN THE MODULE
   ======================
 CSTACK
-  Relative segment, address: 09B0, align: 1
+  Relative segment, address: 03B0, align: 1
   Segment part 1.
     -------------------------------------------------------------------------
 CSTART
-  Relative segment, address: 1100 - 1103 (0x4 bytes), align: 1
+  Relative segment, address: C000 - C003 (0x4 bytes), align: 1
   Segment part 9.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           __program_start         1100            ?reset_vector (?reset_vector)
+           __program_start         C000            ?reset_vector (?reset_vector)
                                                    Absolute parts (?ABS_ENTRY_MOD)
-           ?cstart_begin           1100 
+           ?cstart_begin           C000 
     -------------------------------------------------------------------------
 CSTART
-  Relative segment, address: 1104 - 110B (0x8 bytes), align: 1
+  Relative segment, address: C004 - C00B (0x8 bytes), align: 1
   Segment part 18.            Intra module refs:   Segment part 9
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           ?cstart_call_main       1104 
-           ?cstart_end             110C 
+           ?cstart_call_main       C004 
+           ?cstart_end             C00C 
 
     -------------------------------------------------------------------------
   LIBRARY MODULE, NAME : ?reset_vector
@@ -262,11 +293,11 @@ RESET
   SEGMENTS IN THE MODULE
   ======================
 <CODE> 1 (was CODE)
-  Relative segment, address: 1162 - 1165 (0x4 bytes), align: 1
+  Relative segment, address: C060 - C063 (0x4 bytes), align: 1
   Segment part 2.
            ENTRY                   ADDRESS         REF BY
            =====                   =======         ======
-           exit                    1162            Segment part 18 (?cstart)
+           exit                    C060            Segment part 18 (?cstart)
                calls direct
 
 
@@ -281,12 +312,13 @@ RESET
 
 SEGMENT              SPACE    START ADDRESS   END ADDRESS     SIZE  TYPE  ALIGN
 =======              =====    =============   ===========     ====  ====  =====
-DATA16_AN                              0020 - 0022               3   rel    0
+DATA16_AN                              0020 - 0025               6   rel    0
                                        0027 - 0027               1 
                                        0120 - 0121               2 
-CSTACK                                 09B0 - 09FF              50   rel    1
-CSTART                                 1100 - 110B               C   rel    1
-<CODE> 1                               110C - 1167              5C   rel    1
+CSTACK                                 03B0 - 03FF              50   rel    1
+CSTART                                 C000 - C00B               C   rel    1
+<CODE> 1                               C00C - C065              5A   rel    1
+INTVEC                                 FFE0 - FFE5               6   com    1
 RESET                                  FFFE - FFFF               2   rel    1
 
                 ****************************************
@@ -295,8 +327,8 @@ RESET                                  FFFE - FFFF               2   rel    1
                 *                                      *
                 ****************************************
 
- 106 bytes of CODE memory
-  80 bytes of DATA memory (+ 6 absolute )
+ 110 bytes of CODE memory
+  80 bytes of DATA memory (+ 9 absolute )
 
 Errors: none
 Warnings: none

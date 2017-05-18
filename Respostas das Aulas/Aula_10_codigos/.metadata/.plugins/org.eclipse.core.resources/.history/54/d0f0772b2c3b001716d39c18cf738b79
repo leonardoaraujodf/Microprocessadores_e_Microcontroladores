@@ -1,0 +1,22 @@
+#include <msp430.h> 
+#define L0 BIT0
+#define L1 BIT1
+#define L2 BIT2
+#define L3 BIT3
+#define L4 BIT4
+#define L5 BIT5
+
+/*
+ * main.c
+ */
+int main(void) {
+    WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
+	for(;;)
+	{
+	    //acender o led L0
+	    P1DIR = L0
+
+	}
+	
+	return 0;
+}
