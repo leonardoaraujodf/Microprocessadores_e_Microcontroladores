@@ -1,0 +1,58 @@
+void Atraso(volatile unsigned int x)
+{
+	/*
+	TAR modos
+	- UP: TAR vai de 0 a TACCR0
+	- CONTINUOUS: TAR vai de 0 a 0xFFFF
+	- UP/DOWN: TAR vai de 0 a TACCR0 a 0	
+	*/
+	TACCR0 = 1000-1;
+	TACTL |= TACLR
+	TACTL = TASSEL_2 + ID_0 + MC_1;
+	while(X>0)
+	{
+		X--;
+		while((TACTL&TAIFG)==0);
+		TACTL &= ~TAIFG;
+	}
+	TACTL |= TACLR;
+	TACTL = MC_0;
+}
+
+//QUESTAO DE FREQUENCIA DE LEDS
+int main (void)
+{
+	WDTCTL = WDTPW | WDTHOLD;
+	P1OUT &= ~BIT0;
+	P1DIR |= BIT0;
+	TACCR0 = 5000-1; //periodo de 20 hz
+	TACTL = TASSEL_2 + ID_0 + MC_1 + TAIE;
+	_BIS_SR(GIE + LMP0_bits);
+	return 0;
+}
+interrupt(TA0....)TAISR(void)
+{
+	P1OUT1 = BIT0;
+	TACTL &= ~TAIFG;
+}
+//questao da porta paralela para serial
+
+P1DIR = 0;
+P2DIR |= BIT0;
+void paralelo_para_serial(void)
+{
+	char b,m// b - bit, m - mascara
+	P2OUT |= BIT0;
+	Atraso(1);
+	m = BIT0;
+	for(b=0;b<8;b++)
+	{
+		if(P1IN&m) P2OUT |=  BIT0;
+		else P2OUT &= BIT0;
+		Atraso(1);
+		m = (m<<1); //deslocar o bit para a esquerda
+	}
+	P2OUT &= ~BIT0;
+	Atraso(1);
+}
+
