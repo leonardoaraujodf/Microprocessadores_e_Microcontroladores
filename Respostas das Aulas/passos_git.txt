@@ -1,0 +1,5 @@
+passos git
+
+- git add -A
+- git commit -m "Comenta alguma coisa"
+- git push https://github.com/leonardoaraujodf/Microprocessadores_e_Microcontroladores.git
