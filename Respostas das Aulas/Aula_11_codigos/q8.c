@@ -23,18 +23,18 @@ void Atraso(volatile unsigned int x)
 
 void paralelo_para_serial(void)
 {
+
     int i,x;
     x = P1IN;
-    //A ideia é supor que P1IN vai ficar sem mudar sua saída por no mínimo 8 ms
-    P2OUT |= BIT0; //Começando com um bit 1
+    P2OUT |= BIT0; //Começando com um bit 1 e mandando ele por 1 ms
     atraso(1);
-    for(i=0;i<10;i++)
+    for(i=0;i<8;i++)
     {
-        P2OUT = x;
+        P2OUT |= (x&BIT0); //Mascarando x para nao aparecer valor espúrio na saída de P2OUT inteira
         Atraso(1);
         x = (x >> 1); //vai mandando do lsb para o msb de P1IN
     }
-    P2OUT &= ~(BIT0);
+    P2OUT &= ~(BIT0); //Manda o bit 0 para terminar a comunicação
     Atraso(1);
 }
 
@@ -52,4 +52,3 @@ int main(void) {
     }
     return 0;
 }
-
