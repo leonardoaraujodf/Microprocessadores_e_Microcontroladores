@@ -138,6 +138,7 @@ int leitor_de_botoes(void)
     return botao;
     }
 }
+
 void pisca_led(int quantidade_piscadas)
 {
     int i;

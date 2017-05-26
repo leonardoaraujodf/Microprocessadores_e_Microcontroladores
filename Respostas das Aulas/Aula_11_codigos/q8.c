@@ -1,4 +1,4 @@
-#include <msp430.h> 
+#include <msp430g2553.h> 
 
 /*
  * main.c
@@ -21,21 +21,31 @@ void Atraso(volatile unsigned int x)
 
 }
 
-void paralelo_para_serial(void)
+void serial_para_paralelo(void)
 {
-
-    int i,x;
-    x = P1IN;
-    P2OUT |= BIT0; //Começando com um bit 1 e mandando ele por 1 ms
-    atraso(1);
-    for(i=0;i<8;i++)
+    /*Na entrada vem uma palavra da forma 1 XXXX XXXX 0
+     *
+     */
+    if((P2IN&BIT0) == 1)
     {
-        P2OUT |= (x&BIT0); //Mascarando x para nao aparecer valor espúrio na saída de P2OUT inteira
-        Atraso(1);
-        x = (x >> 1); //vai mandando do lsb para o msb de P1IN
+        /*Deve ser verificado se o primeiro bit é 1.
+         *É meio que a lógica do bit de paridade
+         *
+         */
+        Atraso(1); /*Espera 1 ms pra aparecer a primeira entrada de dados*/
+        int x=0,i,y=0;
+            for(i=0;i<8;i++)
+            {
+                x = 0;
+                x |= (P2IN&BIT0);//mascarando a porta P2IN para pegar somente o valor de P2.0 e armazenar em x
+                y |= (x << i); //desloca x
+                Atraso(1); //Espera 1 ms até vir a próxima entrada
+            }
+        if((P2IN&BIT0)==0)
+            {/*Aqui tem que verificar outro bit na porta P2.0*/
+             P1OUT = y;
+            }
     }
-    P2OUT &= ~(BIT0); //Manda o bit 0 para terminar a comunicação
-    Atraso(1);
 }
 
 
@@ -43,12 +53,12 @@ int main(void) {
     WDTCTL = WDTPW | WDTHOLD;   // Stop watchdog timer
     BCSCTL1 = CALBC1_1MHZ;      //MCLK e SMCLK @ 1MHz
     DCOCTL = CALDCO_1MHZ;       //MCLK e SMCLK @ 1MHz
-    P1DIR = 0; //Definindo toda a porta P1 como entrada
-    P2OUT = 0; //Inicializando toda a porta P2 em 0
-    P2DIR |= BIT0; //Definindo somente P2.0 definida como saida
+    P1OUT = 0; //Limpando a porta P1
+    P1DIR = 0xFF; //Definindo toda a porta P1 como saida
+    P2DIR &= ~(BIT0); //Definindo P2.O como entrada
     for(;;)
     {
-        paralelo_para_serial();
+        serial_para_paralelo();
     }
     return 0;
 }
