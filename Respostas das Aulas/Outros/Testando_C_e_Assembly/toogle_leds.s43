@@ -1,0 +1,9 @@
+#include "msp430g2553.h" ; Processor specific definitions
+        NAME toogle_leds
+        EXTERN rand
+        PUBLIC toogle_leds ; Declare symbol to be exported
+        RSEG CODE ; Code is relocatable
+toogle_leds;
+        xor.b #01h,&P1OUT ; Toggle 0x01 bit Port 1 output
+        ret
+END

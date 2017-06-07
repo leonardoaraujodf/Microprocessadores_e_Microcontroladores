@@ -1,0 +1,75 @@
+#include "msp430g2553.h"
+	NAME	Motor_Direction
+	EXTERN	rand
+;===================================================
+; Motor_Direction
+;===================================================
+	PUBLIC	Motor_Direction		; Declare symbol to be exported
+	RSEG	CODE			; Code is relocatable
+
+
+Motor_Direction:
+;=============================	
+;       Definition: The function's objective is to controls ;the motors direction 
+;      when the sensors TCRT5000 change their values passing ;under a black line. 
+;       It controls the robot movement turning it to the left ;or to the right.
+;
+; - Registers Convention
+;	R12 = c1
+;	R13 = c2
+;	The function returns the value on R12
+;
+; - Table ASCII Convention
+;	R = 0x52 (meaning: RIGHT)
+;	L = 0x4C (meaning: LEFT)
+;	S = 0x53 (meaning: STOP)
+;
+; - IC L293B configuration
+;
+;       RIGHT RIGHT |  RIGHT LEFT  | LEFT RIGHT  |  STOP STOP
+;       INPUT1 = 1  |  INPUT1 = 0  |  INPUT1 = 1 |  INPUT1 = 1 ; 
+;       INPUT2 = 0  |  INPUT2 = 1  |  INPUT2 = 0 |  INPUT2 = 1 ; 
+;       INPUT3 = 1  |  INPUT3 = 1  |  INPUT3 = 0 |  INPUT3 = 1 ; 
+;       INPUT4 = 0  |  INPUT4 = 0  |  INPUT4 = 1 |  INPUT4 = 1
+;
+; - Corresponding BITs in P1
+;       P1.0 - INPUT1
+;       P1.1 - INPUT2
+;       P1.2 - INPUT3
+;       P1.4 - INPUT4
+;================================
+;================================
+;if (c1 == 'R' && c2 == 'R')	
+;================================
+if_1_Motor_Direction:	CMP.B	#0x52, R12
+	JNE	if_3_Motor_Direction
+	CMP.B	#0x52, R12
+	JNE	if_2_Motor_Direction
+; return the value 00101 for right right
+	MOV.w	#0x5,	R12
+	RET
+;=================================
+;else if (c1 == 'R' && c2 == 'L')
+;=================================
+if_2_Motor_Direction:
+; return the value 10001 for right left
+        MOV.W   #0x11, R12
+	RET
+;==================================
+;  else if (c1 == 'L' && c2 == 'R')
+;==================================
+if_3_Motor_Direction:	
+        CMP.B	#0x4C, R12
+	JNE	if_4_Motor_Direction
+; return the value 00110 for right left
+	MOV.W	#0x6,	R12
+	RET
+;==================================
+;  else if (c1 == 'S' && c2 == 'S')
+;==================================
+if_4_Motor_Direction:
+; return the value 10111 for stop
+	MOV.W	#0x17, R12
+	RET
+        
+        END
