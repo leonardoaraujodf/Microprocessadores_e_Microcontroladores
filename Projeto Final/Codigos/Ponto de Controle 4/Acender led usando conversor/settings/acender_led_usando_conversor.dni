@@ -1,5 +1,10 @@
-[DebugChecksum]
-Checksum=396589044
+[InterruptLog]
+LogEnabled=0
+SumEnabled=0
+GraphEnabled=0
+ShowTimeLog=1
+ShowTimeSum=1
+SumSortOrder=0
 [Stack]
 FillEnabled=0
 OverflowWarningsEnabled=1
@@ -10,17 +15,6 @@ UseTrigger=1
 TriggerName=main
 LimitSize=0
 ByteLimit=50
-[CallStack]
-ShowArgs=0
-[Disassembly]
-MixedMode=1
-[InterruptLog]
-LogEnabled=0
-SumEnabled=0
-GraphEnabled=0
-ShowTimeLog=1
-ShowTimeSum=1
-SumSortOrder=0
 [Breakpoints2]
 Count=0
 [Interrupts]
@@ -35,15 +29,25 @@ ActionState=1
 [Trace1]
 Enabled=0
 ShowSource=1
+[DebugChecksum]
+Checksum=-1312684074
 [State Storage]
-Control Register=-1
+Control Register=49176
 [Sequencer]
-Control Register=-1
-NextState0=-1
-NextState1=-1
+Control Register=49176
+NextState0=49176
+NextState1=49176
 [Action Register]
-Break=-1
-State Storage=-1
+Break=2
+State Storage=1
+[CallStack]
+ShowArgs=0
+[Disassembly]
+MixedMode=1
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
 [TermIOLog]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -55,10 +59,6 @@ Mode=0
 Graph=0
 Symbiont=0
 Exclusions=
-[Log file]
-LoggingEnabled=_ 0
-LogFile=_ ""
-Category=_ 0
 [Breakpoints]
 Count=0
 [FET]
