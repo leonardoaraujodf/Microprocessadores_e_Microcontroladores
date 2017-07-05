@@ -648,7 +648,7 @@
         </option>
         <option>
           <name>OutputFile</name>
-          <state>principal com interrupcao.d43</state>
+          <state>push button.d43</state>
         </option>
         <option>
           <name>OutputFormat</name>
@@ -714,7 +714,7 @@
         </option>
         <option>
           <name>XclFile</name>
-          <state>$TOOLKIT_DIR$\CONFIG\lnk430G2553.xcl</state>
+          <state>$TOOLKIT_DIR$\CONFIG\lnk430F149.xcl</state>
         </option>
         <option>
           <name>XclFileSlave</name>
@@ -842,7 +842,7 @@
         </option>
         <option>
           <name>ExtraOutputFile</name>
-          <state>principal com interrupcao.a43</state>
+          <state>push button.a43</state>
         </option>
         <option>
           <name>ExtraOutputFormat</name>

@@ -8,6 +8,7 @@
 #define ADC_CHANNELS 2
 volatile unsigned int com=0;
 volatile unsigned int impulse=0;
+volatile unsigned int stop=0;
 unsigned int adc[ADC_CHANNELS]=0;
 
 void Control_Speed(int Speed)
@@ -51,27 +52,28 @@ void Control_Speed(int Speed)
       TACCR0 = 10000; //100 hz
       TACCR1 = 4000; //55% of the Duty Cycle
       TACCTL1 = OUTMOD_7;
-      TACTL = TACTL = TASSEL_2 + ID_0 + MC_1;
+      TACTL = TASSEL_2 + ID_0 + MC_1;
     }
     else if(Speed == 5)
     {
       TACTL = TACLR;
       TACCR0 = 10000; //100 hz
-      TACCR1 = 6500; //65% of the Duty Cycle
+      TACCR1 = 75000; //75% of the Duty Cycle
       TACCTL1 = OUTMOD_7;
-      TACTL = TACTL = TASSEL_2 + ID_0 + MC_1;
+      TACTL = TASSEL_2 + ID_0 + MC_1;
     }
 }
 
 extern int Motor_Direction(char c1,char c2);
 void Change_Direction(void)
 {
+  //adc[0] = p1.1 - sensor esquerda
+  //adc[1] = p1.0 - sensor direita
   volatile unsigned int i = 2000;
-  if((adc[0] < 900) && (adc[1] < 900))
+  if((adc[0] > 800) && (adc[1] > 800))
   {
-    
     P1OUT &= ~INPUTS;
-    P1OUT |= 0x24;
+    P1OUT |= 0x84;
     if((impulse==0) && (com!=0))
     {
     volatile unsigned int delay = 8000;
@@ -79,24 +81,36 @@ void Change_Direction(void)
     while(delay--);
     Control_Speed(com);
     impulse++;
-    }
+    } 
   }
-  else if((adc[0] > 900) && (adc[1] < 900))
+  else if((adc[1] < 800) && (adc[0] > 800))
   {
+    //right motor stops
     P1OUT &= ~INPUTS;
-    P1OUT |= 0x34; //Motor_Direction('S','R');
+    P1OUT |= 0x94; //Motor_Direction('S','R');
     impulse=0;
   }
-  else if((adc[0] < 900) && (adc[1] > 900))
+  else if((adc[0] < 800) && (adc[1] > 800))
   {
+    //left motor stops
     P1OUT &= ~INPUTS;
     P1OUT |= 0xA4; //Motor_Direction('R','S');
     impulse=0;
   }
   else
   {
+    if(stop==1)
+    {
     P1OUT &= ~INPUTS;
     P1OUT |= 0xB4; //Motor_Direction('S','S');
+    stop=0;
+    }
+    else
+    {
+      stop=1;
+      volatile unsigned int delay = 1000;
+      while(delay--);
+    }
     impulse=0;
   }
   while(i--);
@@ -106,7 +120,7 @@ void Setup_ADC(void)
 {
   ADC10CTL0 |=  SREF_0 +  ADC10SHT_0 + MSC + ADC10ON + ADC10IE; //Reference from 
   //Vcc and Vss, sampling time of 16×ADC10CLKs, ADC10ON
-  ADC10CTL1 |= INCH_1 + CONSEQ_3 + ADC10SSEL_3 + SHS_0; //Input channel A1 and A0; repeated sequence 
+  ADC10CTL1 |= INCH_1 + CONSEQ_1 + ADC10SSEL_3 + SHS_0; //Input channel A1 and A0; repeated sequence 
   ADC10AE0 = BIT0 + BIT1; // Analog Input in P1.0 and P1.1; 
   ADC10DTC1 = ADC_CHANNELS; // 2 conversions
   ADC10CTL0 |= ENC + ADC10SC; // Sampling and conversion start
