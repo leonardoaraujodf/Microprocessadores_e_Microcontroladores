@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <Workspace>
     <ConfigDictionary>
-        <CurrentConfigs>
-            <Project>piscar_1_hz/Debug</Project>
-        </CurrentConfigs>
-    </ConfigDictionary>
+        
+    <CurrentConfigs/></ConfigDictionary>
     <WindowStorage>
         <ChildIdMap>
             <TB_MAIN>34048</TB_MAIN>
@@ -75,7 +74,7 @@
                 <ColumnWidth0>10</ColumnWidth0>
                 <ColumnWidth1>1306</ColumnWidth1>
                 <FilterLevel>2</FilterLevel>
-                <LiveFile></LiveFile>
+                <LiveFile/>
                 <LiveLogEnabled>0</LiveLogEnabled>
                 <LiveFilterLevel>-1</LiveFilterLevel>
             </IarPane-34061>
@@ -164,7 +163,7 @@
                 <ColumnWidth1>67</ColumnWidth1>
                 <ColumnWidth2>810</ColumnWidth2>
                 <FilterLevel>2</FilterLevel>
-                <LiveFile></LiveFile>
+                <LiveFile/>
                 <LiveLogEnabled>0</LiveLogEnabled>
                 <LiveFilterLevel>-1</LiveFilterLevel>
             </IarPane-34052>
@@ -186,7 +185,7 @@
                 <ColumnWidth1>67</ColumnWidth1>
                 <ColumnWidth2>810</ColumnWidth2>
                 <FilterLevel>2</FilterLevel>
-                <LiveFile></LiveFile>
+                <LiveFile/>
                 <LiveLogEnabled>0</LiveLogEnabled>
                 <LiveFilterLevel>-1</LiveFilterLevel>
             </IarPane-34053>
@@ -209,7 +208,7 @@
                 <ColumnWidth2>607</ColumnWidth2>
                 <ColumnWidth3>270</ColumnWidth3>
                 <FilterLevel>2</FilterLevel>
-                <LiveFile></LiveFile>
+                <LiveFile/>
                 <LiveLogEnabled>0</LiveLogEnabled>
                 <LiveFilterLevel>-1</LiveFilterLevel>
             </IarPane-34054>
@@ -231,7 +230,7 @@
                 <ColumnWidth1>67</ColumnWidth1>
                 <ColumnWidth2>810</ColumnWidth2>
                 <FilterLevel>2</FilterLevel>
-                <LiveFile></LiveFile>
+                <LiveFile/>
                 <LiveLogEnabled>0</LiveLogEnabled>
                 <LiveFilterLevel>-1</LiveFilterLevel>
             </IarPane-34055>
@@ -250,7 +249,7 @@
             </BasePane-34057>
             <IarPane-34057>
                 <FilterLevel>2</FilterLevel>
-                <LiveFile></LiveFile>
+                <LiveFile/>
                 <LiveLogEnabled>0</LiveLogEnabled>
                 <LiveFilterLevel>-1</LiveFilterLevel>
             </IarPane-34057>
@@ -280,7 +279,7 @@
             <BasePane-34050>
                 <IsVisible>0</IsVisible>
             </BasePane-34050>
-            <IarPane-34050 />
+            <IarPane-34050/>
             <Pane-34051>
                 <ID>34051</ID>
                 <RectRecentFloat>000000001600000022010000C6000000</RectRecentFloat>
@@ -294,7 +293,7 @@
             <BasePane-34051>
                 <IsVisible>0</IsVisible>
             </BasePane-34051>
-            <IarPane-34051 />
+            <IarPane-34051/>
             <Pane-34056>
                 <ID>34056</ID>
                 <RectRecentFloat>00000000160000000601000076010000</RectRecentFloat>
@@ -338,7 +337,7 @@
             <BasePane-34059>
                 <IsVisible>0</IsVisible>
             </BasePane-34059>
-            <IarPane-34059 />
+            <IarPane-34059/>
             <Pane-34060>
                 <ID>34060</ID>
                 <RectRecentFloat>000000001600000022010000C6000000</RectRecentFloat>
@@ -352,7 +351,7 @@
             <BasePane-34060>
                 <IsVisible>0</IsVisible>
             </BasePane-34060>
-            <IarPane-34060 />
+            <IarPane-34060/>
             <DockingManager-256>
                 <DockingPaneAndPaneDividers>000000000C000000000000000080000000000000FFFFFFFFFFFFFFFF000000000000000004000000040000000000000001000000040000000100000000000000000000000C85000000000000000000000000000000000000010000000C850000010000000C850000000000000080000000000000FFFFFFFFFFFFFFFF000000000000000004000000040000000000000001000000040000000100000000000000000000000B85000000000000000000000000000000000000010000000B850000010000000B850000000000000010000001000000FFFFFFFFFFFFFFFF06010000320000000A01000069020000010000000200001004000000010000000000000000000000FFFFFFFF02000000088500000A850000FFFF02000B004354616262656450616E6500100000010000000000000048000000060100007F02000000000000320000000601000069020000000000004010005602000000FFFEFF0E53006F0075007200630065002000420072006F007700730065007200000000000885000001000000FFFFFFFFFFFFFFFFFFFEFF0957006F0072006B0073007000610063006500010000000A85000001000000FFFFFFFFFFFFFFFF01000000000000000000000000000000000000000000000001000000FFFFFFFF0885000001000000FFFFFFFF08850000000000000080000000000000FFFFFFFFFFFFFFFF00000000000000000400000004000000000000000100000004000000010000000000000000000000038500000000000000000000000000000000000001000000038500000100000003850000000000000080000000000000FFFFFFFFFFFFFFFF00000000000000000400000004000000000000000100000004000000010000000000000000000000028500000000000000000000000000000000000001000000028500000100000002850000000000000080000001000000FFFFFFFFFFFFFFFF0000000069020000560500006D020000010000000100001004000000010000003CFEFFFF6F000000FFFFFFFF070000000185000004850000058500000685000007850000098500000D85000001800080000001000000000000008302000056050000C5020000000000006D02000056050000AF020000000000004080005607000000FFFEFF054200750069006C006400010000000185000001000000FFFFFFFFFFFFFFFFFFFEFF0C4400650063006C00610072006100740069006F006E007300000000000485000001000000FFFFFFFFFFFFFFFFFFFEFF0A5200650066006500720065006E00630065007300000000000585000001000000FFFFFFFFFFFFFFFFFFFEFF0D460069006E006400200069006E002000460069006C0065007300000000000685000001000000FFFFFFFFFFFFFFFFFFFEFF1541006D0062006900670075006F0075007300200044006500660069006E006900740069006F006E007300000000000785000001000000FFFFFFFFFFFFFFFFFFFEFF0B54006F006F006C0020004F0075007400700075007400000000000985000001000000FFFFFFFFFFFFFFFFFFFEFF094400650062007500670020004C006F006700010000000D85000001000000FFFFFFFFFFFFFFFF06000000000000000000000000000000000000000000000001000000FFFFFFFF0185000001000000FFFFFFFF01850000000000000000000000000000</DockingPaneAndPaneDividers>
             </DockingManager-256>
@@ -380,4 +379,6 @@
             </MDIClientArea-0>
         </MDIWindows>
     </WindowStorage>
-</Workspace>
+<Desktop><Static><Workspace><ColumnWidths><Column0>124</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths></Workspace></Static><Windows><Wnd0><Tabs><Tab><Identity>TabID-416-19478</Identity><TabName>Workspace</TabName><Factory>Workspace</Factory><Session><NodeDict/></Session></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd0></Windows><Editor><Pane/><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor><Positions><Top><Row0><Sizes><Toolbar-02761158><key>iaridepm.enu1</key></Toolbar-02761158></Sizes></Row0></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>641</Bottom><Right>198</Right><x>-2</x><y>-2</y><xscreen>200</xscreen><yscreen>200</yscreen><sizeHorzCX>146413</sizeHorzCX><sizeHorzCY>291545</sizeHorzCY><sizeVertCX>146413</sizeVertCX><sizeVertCY>937318</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes/></Row0></Bottom><Float><Sizes/></Float></Positions></Desktop></Workspace>
+
+

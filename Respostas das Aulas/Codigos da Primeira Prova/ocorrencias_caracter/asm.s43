@@ -1,0 +1,42 @@
+#include "msp430.h"                     ; #define controlled include file
+
+        NAME    main                    ; module name
+
+        PUBLIC  main                    ; make the main label vissible
+                                        ; outside this module
+        ORG     0FFFEh
+        DC16    init                    ; set reset vector to 'init' label
+
+        RSEG    CSTACK                  ; pre-declaration of segment
+        RSEG    CODE                    ; place program in 'CODE' segment
+
+init:   MOV     #SFE(CSTACK), SP        ; set up stack
+
+main:   NOP                             ; main program
+        MOV.W   #WDTPW+WDTHOLD,&WDTCTL  ; Stop watchdog timer
+        JMP $                           ; jump to current location '$'
+                                        ; (endless loop)
+
+ocorrencias_caracter:
+        CLR     R13                     ; R13 = i = 0
+        CLR     R12                     ; R12 = ocorrencias = 0
+ 
+while_ocorrencias:
+        TST     0(R15)                  ; s[i] = \0 ?
+        JEQ     fim_ocorrencias_caracter
+        ADD.W   R13,R15                 ; s[i] = endereço + i
+        CMP     R14,0(R15)
+        JEQ     Ocorreu_caracter
+        INC     R13
+        JMP     while_ocorrencias
+
+Ocorreu_caracter:
+        INC     R12                     ; ocorrencias++
+        INC     R13                     ; i++
+        JMP     while_ocorrencias
+
+fim_ocorrencias_caracter:
+        MOV.W   R12,R15
+        RET
+
+        END
